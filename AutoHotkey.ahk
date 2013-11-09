@@ -79,7 +79,7 @@ return
 return
 
 ;; the combination of ^!u and ^!r make hide/show of, particularly, the taskbar easier
-;; should I use a stack or queue to store the hidden windows?
+;; clearly stack is a better than queue in this case
 
 ^!u::
   global GlobalHideStack
@@ -129,4 +129,9 @@ return
     ;; mostly unnecessary
     Run %A_AhkPath% %A_ScriptFullPath%
   }
+return
+
+;; paste plain text using Shift+Ctrl+V as in Chrome
++^v::
+  Input_ClipBoardAsPlainText()
 return

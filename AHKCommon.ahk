@@ -124,3 +124,17 @@ Restore_ActiveWindowIfMinimized() {
       WinRestore, A
     }
 }
+
+Input_ClipBoardAsPlainText() {
+  ClipSaved := ClipboardAll
+  content = %clipboard%
+  clipboard =
+  clipboard = %content%
+  clipWait
+  Send ^v
+  ;; yes this is ugly, do we have a better way
+  Sleep 100
+  Clipboard := ClipSaved
+  ;; free the memory
+  ClipSaved =
+}
