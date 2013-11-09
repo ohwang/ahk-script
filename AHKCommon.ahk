@@ -88,9 +88,9 @@ Inspect_ActiveWindow() {
 }
 
 Show_InfoBoard() {
-  FormatTime, Time,, MM/dd/yyyy h:mm:ss tt
+  FormatTime, Time,, h : mm tt -- MM-dd
   SplashTextOn, 300, 30, Time, %Time%
-  Sleep 1000
+  Sleep 1500
   SplashTextOff
 }
 

@@ -6,7 +6,8 @@
 
 #SingleInstance Force
 
-#Include C:\Users\i\Documents\
+;; Default working dir is c:\windows\system32
+#Include %A_ScriptDir%
 #Include AHKCommon.ahk
 #Include AHKCursor.ahk
 
@@ -20,19 +21,19 @@
   WinActivate, ahk_id %lastWinId%
 return
 
+^!t::
+  global LastActiveWinId_Terminal
+  Switch_BackForth("moba/x X rl"
+                 , "terminator"
+                 , LastActiveWinId_Terminal)
+return
+
 ;; for things like visual studio
 ;; 1. window class name is not meaningful
 ;; 2. there may be mulitple windows for single vs instance
 ;; 3. you have both 2012 and 2013 installed
 ;; so it's better to have some mechanize to ``register`` customized keys on the fly?
-
-^!t::
-  global LastActiveWinId_Notepad
-  Switch_BackForth("moba/x X rl"
-                 , "terminator"
-                 , LastActiveWinId_Notepad)
-return
-
+;; or just cycle through all vs windows ?
 ; ^!v::
 ;  global LastActiveWinId_Notepad
 ;  Switch_BackForth("Notepad"
@@ -117,4 +118,15 @@ return
 
 ^!o::
   Show_InfoBoard()
+return
+
+;; reload currently used script
++^!r::
+  MsgBox, Script __%A_ScriptFullPath%__ will be reloaded
+  if (A_IsCompiled) {
+    Run %A_ScriptFullPath%
+  } else {
+    ;; mostly unnecessary
+    Run %A_AhkPath% %A_ScriptFullPath%
+  }
 return
