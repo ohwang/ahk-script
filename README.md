@@ -10,11 +10,11 @@ Inspired by KBC Pocker and XMonad
 The most important guys are
 
 ```
-LAlt + W|S|A|D : Arrow keys
-LAlt + [|'     : Home|End
+RAlt + W|S|A|D : Arrow keys
+RAlt + [|'     : Home|End
 ```
 
-__Ctrl__ and __Shift__ can be used in conjunction with ``LAlt + W|S|A|D`` for
+__Ctrl__ and __Shift__ can be used in conjunction with ``RAlt + W|S|A|D`` for
 move by words and text selection
 
 ### Window Management
@@ -31,6 +31,10 @@ move by words and text selection
 
 * Cycle through windows using ``Ctrl + Alt + H|L``
 
+* Cycle through tabs inside a window using ``RAlt + N|P``
+
+  Cycle through windows of the same class using ``Shift + RAlt + N|P``
+
 * Hide current active window using ``Ctrl + Alt + U``
 
     (particularly useful to hide an auto-hide Taskbar when you don't want it to
@@ -41,10 +45,11 @@ move by words and text selection
 ### Other goodies
 
 ```
-LAlt + / : Del
-LAlt + Q : Esc
-LAlt + F : Global Search (available in win8)
-Ctrl + Alt + Shift + F : Toggle FullScreen (buggy)
+RAlt + / : Del
+RAlt + Q : Esc
+RAlt + F : Pop out global search pane (i.e. Win+Q in win8)
+Ctrl + Alt + Shift + F : Toggle fullscreen (buggy)
+Shift + Ctrl + V : Paste as plain text
 ```
 
 

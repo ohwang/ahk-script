@@ -118,11 +118,10 @@ Toggle_FullScreen() {
 }
 
 Restore_ActiveWindowIfMinimized() {
-  WinGetActiveStats, _WinTitle, _WinWidth, _WinHeight, X, Y
-    if (X < -30000 && Y < -30000) {
-      ;; MsgBox, Window is minimized
-      WinRestore, A
-    }
+  WinGet, minMaxState, MinMax, A
+  if (minMaxState == -1) {
+    WinRestore, A
+  }
 }
 
 Input_ClipBoardAsPlainText() {
@@ -137,4 +136,45 @@ Input_ClipBoardAsPlainText() {
   Clipboard := ClipSaved
   ;; free the memory
   ClipSaved =
+}
+
+PushTo_GlobalHideStack(winId) {
+  global GlobalHideStack
+  if (!IsObject(GlobalHideStack))
+  {
+    GlobalHideStack := Object()
+  }
+
+  ; WinGet, CurrentWinId, ID, A
+  WinHide, ahk_id %winId%
+  GlobalHideStack.Insert(winId)
+}
+
+PopFrom_GlobalHideStack() {
+  global GlobalHideStack
+  if (!IsObject(GlobalHideStack)) {
+    GlobalHideStack := Object()
+  }
+
+  MaxIndex := GlobalHideStack.MaxIndex()
+  if (MaxIndex > 0)
+  {
+    LastWinId := GlobalHideStack.Remove()
+    ; MsgBox, LastWinId is %LastWinId%, MaxIndex is %MaxIndex%
+    WinShow, ahk_id %LastWinId%
+    WinActivate, ahk_id %LastWinId%
+  }
+  else
+  {
+    MsgBox, No More Window in the GlobalHideStack!
+  }
+}
+
+Reload_CurrentScript() {
+  if (A_IsCompiled) {
+    Run %A_ScriptFullPath%
+  } else {
+    ;; mostly unnecessary
+    Run %A_AhkPath% %A_ScriptFullPath%
+  }
 }

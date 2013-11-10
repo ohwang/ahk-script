@@ -82,34 +82,12 @@ return
 ;; clearly stack is a better than queue in this case
 
 ^!u::
-  global GlobalHideStack
-  if (!IsObject(GlobalHideStack))
-  {
-    GlobalHideStack := Object()
-  }
-
   WinGet, CurrentWinId, ID, A
-  WinHide, ahk_id %CurrentWinId%
-  GlobalHideStack.Insert(CurrentWinId)
+  PushTo_GlobalHideStack(CurrentWinId)
 return
 
 ^!r::
-  global GlobalHideStack
-  if (! IsObject(GlobalHideStack)) {
-    GlobalHideStack := Object()
-  }
-
-  MaxIndex := GlobalHideStack.MaxIndex()
-  if (MaxIndex > 0)
-  {
-    LastWinId := GlobalHideStack.Remove(MaxIndex)
-    WinShow, ahk_id %LastWinId%
-    WinActivate, ahk_id %LastWinId%
-  }
-  else
-  {
-    MsgBox, No More Window in the GlobalHideStack!
-  }
+  PopFrom_GlobalHideStack()
 return
 
 +^!f::
@@ -123,15 +101,64 @@ return
 ;; reload currently used script
 +^!r::
   MsgBox, Script __%A_ScriptFullPath%__ will be reloaded
-  if (A_IsCompiled) {
-    Run %A_ScriptFullPath%
-  } else {
-    ;; mostly unnecessary
-    Run %A_AhkPath% %A_ScriptFullPath%
-  }
+  Reload_CurrentScript()
 return
 
 ;; paste plain text using Shift+Ctrl+V as in Chrome
 +^v::
   Input_ClipBoardAsPlainText()
+return
+;; TODO: extend the clipboard by, i.e. using multiple buffers just as vim does
+;;       or optionally prompt a selection box to choose from latest 10 clipboard content
+
+>!n::
+  WinGetClass, winClass, A
+  if (winClass == "Vim")
+  {
+    SendInput gt
+  }
+  else
+  {
+    SendInput ^{Tab}
+  }
+return
+
+>!p::
+  WinGetClass, winClass, A
+  if (winClass == "Vim")
+  {
+    SendInput gT
+  }
+  else
+  {
+    SendInput +^{Tab}
+  }
+return
+
+;; switch to the next/prev window of the __same class__
++>!n::
+  WinGetClass, winClass, A
+  /*
+  WinSet, Bottom,, A
+  WinActivate, ahk_class %winClass%
+  */
+  ;; more general ?
+  WinGet, oldWinId, ID, A
+  WinGet, winList, List, ahk_class %winClass%
+  if (winList > 1) {
+    WinActivate, ahk_id %winList2%
+    Restore_ActiveWindowIfMinimized()
+    WinSet, Bottom,, ahk_id %oldWinId%
+  }
+return
+
++>!p::
+  WinGetClass, winClass, A
+  WinGet, winList, List, ahk_class %winClass%
+  if (winList > 1) {
+    lastMatchedWinId := winList%winList%
+    ; MsgBox, winList %winList%, lastMatchedWinId %lastMatchedWinId%
+    WinActivate, ahk_id %lastMatchedWinId%
+    Restore_ActiveWindowIfMinimized()
+  }
 return
