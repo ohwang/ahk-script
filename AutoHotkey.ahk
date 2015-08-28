@@ -11,22 +11,31 @@
 #Include AHKCommon.ahk
 #Include AHKCursor.ahk
 
+
+SetWorkingDir, D:\dev\workspace
+;; End of Auto Execution Section
+return
+
+
 ;; In Case LCtl and CapLock are not switched
 ; LCtrl::CapsLock
 ; CapsLock::LCtrl
 ;; ------------------
+
 
 ^!j::
   LastWinId := Get_LastActiveWinId()
   WinActivate, ahk_id %lastWinId%
 return
 
+
 ^!t::
   global LastActiveWinId_Terminal
   Switch_BackForth("moba/x X rl"
-                 , "terminator"
+                 , "D:\dev\bin\ohwvm-terminator.lnk"
                  , LastActiveWinId_Terminal)
 return
+
 
 ;; for things like visual studio
 ;; 1. window class name is not meaningful
@@ -41,12 +50,28 @@ return
 ;                 , LastActiveWinId_Notepad)
 ; return
 
+
+^!w::
+  ;; send Alt+F4 to quit current application
+  Send !{F4}
+return
+
+
 ^!n::
+  global LastActiveWinId_OneNote
+  Switch_BackForth("Framework::CFrame"
+                 , "onenote"
+                 , LastActiveWinId_OneNote)
+return
+
+
+^!v::
   global LastActiveWinId_GVim
   Switch_BackForth("Vim"
                  , "C:\Program Files (x86)\Vim\Vim74\GVim.exe"
                  , LastActiveWinId_Gvim)
 return
+
 
 ^!e::
   global LastActiveWinId_Explorer
@@ -55,6 +80,7 @@ return
                  , LastActiveWinId_Explorer)
 return
 
+
 ^!b::
   global LastActiveWinId_Chrome
   Switch_BackForth("Chrome_WidgetWin_1"
@@ -62,21 +88,24 @@ return
                  , LastActiveWinId_Chrome)
 return
 
-;; cycling order is consitent with the order of windows in taskbar
-^!l::
-  Send !{Esc}
-  Restore_ActiveWindowIfMinimized()
-return
 
-^!h::
+^!l::
   Send +!{Esc}
   Restore_ActiveWindowIfMinimized()
 return
 
+
+^!h::
+  Send !{Esc}
+  Restore_ActiveWindowIfMinimized()
+return
+
+
 ;; inspect current active window
-^!space::
+^#space::
   Inspect_ActiveWindow()
 return
+
 
 ;; the combination of ^!u and ^!r make hide/show of, particularly, the taskbar easier
 ;; clearly stack is a better than queue in this case
@@ -90,13 +119,16 @@ return
   PopFrom_GlobalHideStack()
 return
 
+
 +^!f::
+  ;; Buggy
   Toggle_FullScreen()
 return
 
 ^!o::
   Show_InfoBoard()
 return
+
 
 ;; reload currently used script
 +^!r::
@@ -111,6 +143,7 @@ return
 ;; TODO: extend the clipboard by, i.e. using multiple buffers just as vim does
 ;;       or optionally prompt a selection box to choose from latest 10 clipboard content
 
+
 >!n::
   WinGetClass, winClass, A
   if (winClass == "Vim")
@@ -123,6 +156,7 @@ return
   }
 return
 
+
 >!p::
   WinGetClass, winClass, A
   if (winClass == "Vim")
@@ -134,6 +168,7 @@ return
     SendInput +^{Tab}
   }
 return
+
 
 ;; switch to the next/prev window of the __same class__
 +>!n::
@@ -152,6 +187,7 @@ return
   }
 return
 
+
 +>!p::
   WinGetClass, winClass, A
   WinGet, winList, List, ahk_class %winClass%
@@ -162,3 +198,4 @@ return
     Restore_ActiveWindowIfMinimized()
   }
 return
+
