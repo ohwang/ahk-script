@@ -29,12 +29,12 @@ return
 return
 
 
-^!t::
-  global LastActiveWinId_Terminal
-  Switch_BackForth("moba/x X rl"
-                 , "D:\dev\bin\ohwvm-terminator.lnk"
-                 , LastActiveWinId_Terminal)
-return
+; ^!t::
+;   global LastActiveWinId_Terminal
+;   Switch_BackForth("ahk_class moba/x X rl"
+;                  , "D:\dev\bin\ohwvm-terminator.lnk"
+;                  , LastActiveWinId_Terminal)
+; return
 
 
 ;; for things like visual studio
@@ -45,7 +45,7 @@ return
 ;; or just cycle through all vs windows ?
 ; ^!v::
 ;  global LastActiveWinId_Notepad
-;  Switch_BackForth("Notepad"
+;  Switch_BackForth("ahk_class Notepad"
 ;                 , "Notepad"
 ;                 , LastActiveWinId_Notepad)
 ; return
@@ -59,7 +59,7 @@ return
 
 ^!n::
   global LastActiveWinId_OneNote
-  Switch_BackForth("Framework::CFrame"
+  Switch_BackForth("ahk_class Framework::CFrame"
                  , "onenote"
                  , LastActiveWinId_OneNote)
 return
@@ -67,7 +67,7 @@ return
 
 ^!v::
   global LastActiveWinId_GVim
-  Switch_BackForth("Vim"
+  Switch_BackForth("ahk_class Vim"
                  , "C:\Program Files (x86)\Vim\Vim74\GVim.exe"
                  , LastActiveWinId_Gvim)
 return
@@ -75,7 +75,7 @@ return
 
 ^!e::
   global LastActiveWinId_Explorer
-  Switch_BackForth("CabinetWClass"
+  Switch_BackForth("ahk_class CabinetWClass"
                  , "Explorer.exe"
                  , LastActiveWinId_Explorer)
 return
@@ -83,14 +83,30 @@ return
 
 ^!b::
   global LastActiveWinId_Chrome
-  Switch_BackForth("Chrome_WidgetWin_1"
+  Switch_BackForth("ahk_exe chrome.exe"
                  , "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
                  , LastActiveWinId_Chrome)
 return
 
 
+^!a::
+  global LastActiveWinId_Atom
+  Switch_BackForth("ahk_exe atom.exe"
+                 , "C:\Users\i\AppData\Local\atom\bin\atom.cmd"
+                 , LastActiveWinId_Atom)
+return
+
+
+^!i::
+  global LastActiveWinId_Idea
+  Switch_BackForth("ahk_exe idea.exe"
+                 , "D:\Apps\IntelliJ IDEA Community Edition 15.0.1\bin\idea.exe"
+                 , LastActiveWinId_Idea)
+return
+
+
 ^!l::
-  Send +!{Esc}
+  Send +!{Esc
   Restore_ActiveWindowIfMinimized()
 return
 
@@ -198,4 +214,3 @@ return
     Restore_ActiveWindowIfMinimized()
   }
 return
-

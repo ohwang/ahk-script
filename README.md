@@ -1,9 +1,9 @@
 ahk-script
 ==========
 
-Simple AHK script that boosts my productivity in windows.
+Simple AHK script that boosts my productivity in Windows.
 
-Inspired by KBC Pocker and XMonad
+Inspired by KBC Poker I and XMonad
 
 ### Arrow Movement
 
@@ -23,7 +23,7 @@ move by words and text selection
 
     ```
     Ctrl + Alt + B : Chrome
-    Ctrl + Alt + N : Gvim
+    Ctrl + Alt + N : OneNote
     Ctrl + Alt + T : Terminator
     Ctrl + Alt + E : Explorer
     Ctrl + Alt + J : Last active app
@@ -51,6 +51,3 @@ RAlt + F : Pop out global search pane (i.e. Win+Q in win8)
 Ctrl + Alt + Shift + F : Toggle fullscreen (buggy)
 Shift + Ctrl + V : Paste as plain text
 ```
-
-
-

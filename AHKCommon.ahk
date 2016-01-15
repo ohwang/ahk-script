@@ -22,11 +22,11 @@ Get_LastActiveWinId() {
 }
 
 ;; partially work with metro windows
-Switch_BackForth(WinClass, AppPath, ByRef LastWinId) {
+Switch_BackForth(WinTitle, AppPath, ByRef LastWinId) {
   ; MsgBox, LastWinId is %LastWinId%
-  IfWinExist ahk_class %WinClass%
+  IfWinExist %WinTitle%
   {
-    IfWinActive ahk_class %WinClass%
+    IfWinActive %WinTitle%
     {
       if (LastWinId == "")
       {
